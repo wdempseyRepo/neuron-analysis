@@ -31,9 +31,9 @@ These are the steps to use each script.
 23. To run the first subsection ("CLEAR AND CLOSE"), click within this subsection and then click the button "Run and Advance" in the top toolbar to clear all previous variables and figures.
 24. Click the "Run and Advance" button for the second section "Initialize variables".
   - Note: Before running step 24, if you would like, feel free to adjust the initialized variables, in case you want to 
-     a. adjust the sliding window for the deltaF/F calculation ("windowVal", which is in seconds)
-     b. adjust the font size of the graphs ("fontS" which is in pixel font size)
-     c. adjust what you want to consider a true peak for an active cell ("peakThresh", which is in arbitrary units)
+    a. adjust the sliding window for the deltaF/F calculation ("windowVal", which is in seconds)
+    b. adjust the font size of the graphs ("fontS" which is in pixel font size)
+    c. adjust what you want to consider a true peak for an active cell ("peakThresh", which is in arbitrary units)
 25. Click the "Run and Advance" button for the third section "Read Data"
 26. A little input dialog window will come up and ask for your input.
 27. Input the filename + path for "yourFile.xlsx"
