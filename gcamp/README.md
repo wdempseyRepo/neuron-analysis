@@ -31,9 +31,9 @@ These are the steps to use each script.
 23. To run the first subsection ("CLEAR AND CLOSE"), click within this subsection and then click the button "Run and Advance" in the top toolbar to clear all previous variables and figures.
 24. Click the "Run and Advance" button for the second section "Initialize variables".
   - Note: Before running step 24, if you would like, feel free to adjust the initialized variables, in case you want to 
-    a. adjust the sliding window for the deltaF/F calculation ("windowVal", which is in seconds)
-    b. adjust the font size of the graphs ("fontS" which is in pixel font size)
-    c. adjust what you want to consider a true peak for an active cell ("peakThresh", which is in arbitrary units)
+	  1. adjust the sliding window for the deltaF/F calculation ("windowVal", which is in seconds)
+	  2. adjust the font size of the graphs ("fontS" which is in pixel font size)
+	  3. adjust what you want to consider a true peak for an active cell ("peakThresh", which is in arbitrary units)
 25. Click the "Run and Advance" button for the third section "Read Data"
 26. A little input dialog window will come up and ask for your input.
 27. Input the filename + path for "yourFile.xlsx"
@@ -45,9 +45,9 @@ These are the steps to use each script.
   - Note that this will make it so a red vertical line appears whenever an intervention takes place
 33. Click the "Run and Advance" button for the third section "Calculations"
 34. The next three sections are interchangeable and can be clicked depending on what you want to show.
-    a. If you just want to show the deltaF/F plot and the original intensity data plot, run the "Plot" subsection
-    b. If you want to plot just the "peaks" to see them more clearly without noise, run "Peak Plot" subsection
-    c. If you want to see the peaks on top of the deltaF/F plot data in bold black coloring, run the "Peakmat plot together" subsection
+    1. If you just want to show the deltaF/F plot and the original intensity data plot, run the "Plot" subsection
+    2. If you want to plot just the "peaks" to see them more clearly without noise, run "Peak Plot" subsection
+    3. If you want to see the peaks on top of the deltaF/F plot data in bold black coloring, run the "Peakmat plot together" subsection
 35. Save any of the graphs as .fig files if you want to adjust them later or just as .png files.
 
 ###
