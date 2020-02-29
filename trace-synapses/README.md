@@ -15,10 +15,10 @@ These are FIJI macros for tracing a circle and a band around a given selected sy
 5. Make sure “set measurements” has average (or median) intensity selected
 6. Run MakeCircles_v1.ijm.ijm (adjust the radius for your circles, if you wish)
 7. Run MeasureCirclesOrBands_v1.ijm.ijm
-8. Save the measurements for average (or median) intensity à Synapse intensity
+8. Save the measurements for average (or median) intensity -> this is a measure of Synapse intensity
 9. “Delete” ROIs with the ROI manager (click “delete” twice)
 10. “Open” the selection that you saved in your folder using ROI manager
 11. Run MakeBands_v1.ijm.ijm (Make sure the radius is the same as for MakeCircles_v1.ijm.ijm)
 12. Run MeasureCirclesOrBands_v1.ijm.ijm
-13. Save the measurements for average (or median) intensity à Background intensity
+13. Save the measurements for average (or median) intensity -> this is a measure of Background intensity
 14. Do background correction (either subtract the average or divide by the average) for normalization
