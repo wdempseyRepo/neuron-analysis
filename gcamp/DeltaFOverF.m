@@ -11,8 +11,6 @@
 % So, for us, the 10 seconds will be a variable number of frames before and
 % after, which we will call 'windowVal'.
 
-% Last updated: 2020-02-13
-
 clear all; close all;
 %% Initialized variables
 % Number of "seconds" on either side of a given frame
@@ -65,7 +63,7 @@ windowFrames = ceil(windowVal/timeInt);
 dFOverF_mat = repmat(-100,(size(dataMat,1)-2*windowFrames-1),...
     size(dataMat,2));
 tpts = zeros(size(dataMat,1)-2*windowFrames-1,1);
-tpts(1)=0; % Start from 0
+tpts(1)=0+windowFrames*timeInt; % Start from 0+windowFrames*timeInt
 for i = 1+windowFrames:size(dataMat,1)-windowFrames-1 % number of rows
     counter = i-(windowFrames);
     %Calculate deltaF over F
@@ -77,7 +75,7 @@ for i = 1+windowFrames:size(dataMat,1)-windowFrames-1 % number of rows
     %Calculate deltaF over F
         dFOverF_mat(counter,:) = (dataMat(i,:)-dummyF0)./dummyF0;
         
-    %Make a timepoint, starting at tpt 0 seconds
+    %Make a timepoint, starting at tpt 0+windowFrames*timeInt seconds
     if counter > 1
         tpts(counter) = tpts(counter-1)+timeInt;
     end
@@ -86,6 +84,15 @@ tpts = tpts/60; % Make time points in minutes for plot
 
 peakMat = dFOverF_mat;
 peakMat = peakMat.*(peakMat>peakThresh);
+% If you want to set the x tick values directly, you must take into
+    % consideration that the first windowVal number of seconds is cut out
+    % of the plot for the moving average to work easily without if
+    % statements or switch statements.
+    xTickVals = inputFrams*timeInt/60;
+    
+% lastTpt is time in minutes when the final frame of the timelapse
+    % occurs
+    lastTpt = size(dataMat,1)*timeInt/60;
 %% Plots
 Fig1 = figure,
 for i = 1:numCols
@@ -93,16 +100,6 @@ for i = 1:numCols
     plot(tpts,dFOverF_mat(:,i),'LineWidth',1.2)
     set(gca,'linewidth',2)
     g = gca;
-    %g.YLim = [-.6,max(max(dFOverF_mat))*1.1];
-    g.YLim = [-0.1,.8]; % Debug, if the limit is too high
-    g.XLim = [0,ceil(max(tpts))];
-    
-    % If you want to set the x tick values directly, you must take into
-    % consideration that the first windowVal number of seconds is cut out
-    % of the plot for the moving average to work easily without if
-    % statements or switch statements.
-    xTickVals = (inputFrams-...
-        windowFrames)*timeInt/60;
     g.XTick = floor(xTickVals);
         hold on
     for j = 1:size(inputFrams,2)
@@ -111,6 +108,16 @@ for i = 1:numCols
             'r-.','LineWidth',1)
     end
     
+    % Make a green solid line for the end of the timelapse (useful for
+    % debugging or if you use a very long sliding window)
+    subplot(numCols,1,i)
+    xline(lastTpt,'g','LineWidth',3)
+    
+    %g.YLim = [-0.1,1.5]; % Debug, if the limit is too high
+    g.YLim = [-.6,max(max(peakMat))*1.1];
+    % From zero to the end of the timelapse, which happens at the same time
+    % regardless of how large the sliding window is
+    g.XLim = [0,lastTpt+1];
     g.FontSize = fontS;
     g.Title.String = regionLabels{i};
     g.Title.FontSize = fontS+4;
@@ -125,6 +132,7 @@ end
 %Fig1.OuterPosition = [118 85 882 793] %for 5 cell data
 %Fig1.Position = [397 54 167 437] % Partly squished 5 cell data
 Fig1.OuterPosition = [397 54 329 820] % Very squished 5 cell data
+Fig1.OuterPosition = [693 182 671 289]; % when there's 1 cell, squished
 saveas(Fig1,[fName,'_01_DeltaFOverF.svg']);
 saveas(Fig1,[fName,'_01_DeltaFOverF.png']);
 %close all;
@@ -132,13 +140,10 @@ saveas(Fig1,[fName,'_01_DeltaFOverF.png']);
 Fig2 = figure,
 for i = 1:numCols
     subplot(numCols,1,i)
-    plot(tpts,dataMat(1+windowFrames:size(dataMat,1)-windowFrames-1,i))
+    plot(tpts,dataMat(1+windowFrames:size(dataMat,1)-windowFrames-1,i),...
+        'LineWidth',1.2)
     set(gca,'linewidth',2)
     g = gca;
-    %g.YLim = [40,180];
-    g.XLim = [0,ceil(max(tpts))];
-        xTickVals = (inputFrams-...
-        windowFrames)*timeInt/60;
     g.XTick = floor(xTickVals);
             hold on
     for j = 1:size(inputFrams,2)
@@ -146,7 +151,12 @@ for i = 1:numCols
         xline(xTickVals(j),...
             'r-.','LineWidth',1.5)
     end
+    % Make a green solid line for the end of the timelapse (useful for
+    % debugging or if you use a very long sliding window)
+    subplot(numCols,1,i)
+    xline(lastTpt,'g','LineWidth',3)
     
+    g.XLim = [0,lastTpt+1];
     g.Title.String = regionLabels{i};
     g.FontSize = fontS;
     g.FontWeight='bold';
@@ -156,6 +166,7 @@ end
 %Fig2.OuterPosition = [140 60 1380 810]
 %Fig2.OuterPosition = [853 276 313 510]
 Fig2.OuterPosition = [397 54 139 820] % very squished 5 cell data
+Fig2.OuterPosition = [693 182 671 289]; % when there's 1 cell, squished
 saveas(Fig2,[fName,'_02_IntensityData.svg']);
 saveas(Fig2,[fName,'_02_IntensityData.png']);
 %close all;
@@ -168,18 +179,26 @@ for i = 1:numCols
     plot(tpts,peakMat(:,i))
     set(gca,'linewidth',2)
     g = gca;
-    g.YLim = [-.6,max(max(peakMat))*1.1];
-    g.XLim = [0,ceil(max(tpts))];
         xTickVals = (inputFrams-...
         windowFrames)*timeInt/60;
     g.XTick = floor(xTickVals);
             hold on
+    % Make a red dashed line for each intervention
     for j = 1:size(inputFrams,2)
         subplot(numCols,1,i)
         xline(xTickVals(j),...
             'r-.','LineWidth',1.5)
     end
     
+    % Make a green solid line for the end of the timelapse (useful for
+    % debugging or if you use a very long sliding window)
+    subplot(numCols,1,i)
+    xline(lastTpt,'g','LineWidth',3)
+    
+    g.YLim = [-.6,max(max(peakMat))*1.1];
+    % From zero to the end of the timelapse, which happens at the same time
+    % regardless of how large the sliding window is
+    g.XLim = [0,lastTpt+1];
     g.FontSize = fontS;
     g.Title.String = regionLabels{i};
     g.Title.FontSize = fontS+4;
@@ -188,7 +207,8 @@ for i = 1:numCols
     ylabel(['Peaks']);
     xlabel('Time (min)');
 end
-Fig3.OuterPosition = [397 54 139 820] % very squished 5 cell data
+%Fig3.OuterPosition = [397 54 139 820] % very squished 5 cell data
+Fig3.OuterPosition = [693 182 671 289]; % when there's 1 cell, squished
 saveas(Fig3,[fName,'_03_PeaksOnly_DeltaFOverF.svg']);
 saveas(Fig3,[fName,'_03_PeaksOnly_DeltaFOverF.png']);
 
@@ -222,6 +242,7 @@ for i = 1:numCols
     xlabel('Time (min)');
 end
 Fig4.OuterPosition = [397 54 139 820] % very squished 5 cell data
+Fig4.OuterPosition = [693 182 671 289]; % when there's 1 cell, squished
 saveas(Fig4,[fName,'_04_PeaksWithDeltaFOverF.svg']);
 saveas(Fig4,[fName,'_04_PeaksWithDeltaFOverF.png']);
 % %% Plot of subset
