@@ -6,7 +6,7 @@ These are the steps to use each script.
 
 ### DeltaFOverF.m
 
-1. Download an .lsm file of interest from the "Synapse Mapping/Zebrafish/2020GCaMPExperiments" dropbox folder.
+1. Download an .lsm file of interest (here, Zeiss ZEN software outputs are used as an example).
 2. Open .lsm file in fiji
 3. In the menu bar, go to Plugins->LSM Toolbox->Show LSM Toolbox
 4. In the LSM Toolbox window, click "Show Infos" button
@@ -50,4 +50,10 @@ These are the steps to use each script.
     3. If you want to see the peaks on top of the deltaF/F plot data in bold black coloring, run the "Peakmat plot together" subsection
 35. Save any of the graphs as .fig files if you want to adjust them later or just as .png files.
 
-###
+### DeltaFOverF.ipynb
+ 
+1. Follow steps 1-17 for the DeltaFOverF.m section above.
+2. Instead of making a .xlsx file at this point, just open the DeltaFOverF.ipynb Jupyter notebook in Anaconda Navigator.
+3. Add the correct path to the "path" variable in the notebook.
+4. Add in the proper timeInt and interv variables (for time in seconds per frame and frames used for experimental interventions, respectively).
+5. Follow the instructions in the notebook to create dataframes for the analyzed regions, including a dataframe for the deltaF/F0 calculation. Note that F0 can be calculated either as an average or a percentile measurement.
