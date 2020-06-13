@@ -24,6 +24,8 @@ If you only have one image file and want to select e.g., synapses from their sur
 13. Save the measurements for average (or median) intensity -> this is a measure of Background intensity.
 14. Do background correction (either subtract the average or divide by the average) for normalization.
 
+### MeasureZProfileCirclesOrBands_v1.ijm.ijm
+
 If you have a time series (e.g., fluorescence data from genetically encoded calcium/voltage indicators) and you would like to pull out a z profile of intensity information from a series of cells.
 1. In [FIJI](https://fiji.sc) (tested on version 2.0.0-rc-49/1.51a), use the multiple selection tool to select as many cells as you want.
 2. Use the “ROI manager” to save these selections (for mac it is command+“t”, but maybe for windows it is control+“t”)?
@@ -35,3 +37,11 @@ If you have a time series (e.g., fluorescence data from genetically encoded calc
 7. Change the fpath variable in MeasureZProfileCirclesOrBands_v1.ijm.ijm to reflect the correct path for where you want the data to be exported for that particular time lapse.
 8. Run MeasureZProfileCirclesOrBands_v1.ijm.ijm.
 9. A set of .csv files will be generated (one for every cell that you select with the multiple selection tool), and they will be generated with titles of the same numerical order as the ROIs themselves. Use these in conjunction with deltaFOverF0.ipynb, or a comparable program that extracts information from intensity traces.
+
+### Renaming-csv-list-of-files.ipynb
+
+This is a helper file that allows you to take a list of similarly named csv files and add a string to their header. This is especially relevant when running "MeasureZProfileCirclesOrBands_v1.ijm.ijm", which outputs a list of "Results" files for each selected neuron. The list is incremented, but the filenames initially give no information about where the cell came from (e.g., did the fish come from fish 1 or fish 2 or etc.?)
+1. Once you have your list of .csv files for a given condition (e.g., for a given fish #), put all of the related files into a folder.
+2. Direct the path in Renaming-csv-list-of-files.ipynb to the correct folder containing those .csv files.
+3. Put your additional text string into the "addedText" variable (for example, if you want the *Results_1.csv* to become *Fish-01_Results_1.csv*, addedText='Fish-01_').
+4. Run the cells in order, top to bottom, in Renaming-csv-list-of-files.ipynb and the filenames will be renamed in an output folder.
