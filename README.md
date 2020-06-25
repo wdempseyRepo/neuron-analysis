@@ -20,4 +20,4 @@ Please direct comments to the [project issue tracker](https://github.com/wdempse
 
 ## License
 
-These scripts are available as open source.
+neuron-analysis is made available as open source under the MIT License. See the [LICENSE](https://github.com/wdempseyRepo/neuron-analysis/blob/master/LICENSE) file for more information.
