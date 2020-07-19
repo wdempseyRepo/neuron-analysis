@@ -15,9 +15,7 @@ Scripts in the trace-synapses/ folder. These macros are used to analyze individu
 
 1. MeasureCirclesOrBands_v1.ijm.ijm and the associated MakeBands_v1.ijm.ijm and MakeCircles_v1.ijm.ijm files are FIJI macros (tested in FIJI version 2.0.0-rc-49/1.51a). These macros allow one to use the "multipoint" tool in FIJI to select the approximate centers of synapses in a given image and then calculate their mean/median intensity ("circles" around the center) versus the local background intensity ("bands" around the center circles). The resulting intensity measurements are only for a single optical section, so if using volume images, one must be aware to try to choose the center of a given synapse (or make multiple circle measurements in the depth dimension in order to characterize the entire synapse).
 
-Scripts in the misc/ folder. These scripts are small methods that are useful for organizing data that is processed for other scripts.
-
-1. Renaming-csv-list-of-files.ipynb is a script that changes filenames in a particular folder in bulk, usually to add a prefix or suffix to the file. This
+2. Renaming-csv-list-of-files.ipynb is a script that changes filenames in a particular folder in bulk, usually to add a prefix or suffix to the file. This
 is especially useful for renaming files generated from FIJI with the trace-synapses macros so that prefixes (e.g., "Fish-XX_") can be added to each of the
 output "Results_X.csv" files so that they can be brought into a single folder to be read by DeltaFOverF.ipynb, for example.
 
